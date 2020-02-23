@@ -7,9 +7,10 @@ export default function Navbar(props){
        if(e.target.name ){
             updObj[e.target.name] = e.target.dataset.value || e.target.value;
        }
-       else{
-           updObj[e.target.dataset.name] = e.target.dataset.value;
+       else if (e.target.dataset.name){
+           updObj[e.target.dataset.name] = e.target.dataset.value || e.target.value;
        }
+       else throw Error("Error in onChange Handler")
        props.onInputChange(updObj);
     }
 
@@ -17,7 +18,7 @@ export default function Navbar(props){
         let updObj = {
             search:"",
             type:"",
-            fontSize:10,
+            fontSize:20,
         }
         props.onInputChange(updObj);
     }
@@ -29,17 +30,17 @@ export default function Navbar(props){
             <input id="type" name="type" type="text" placeholder="Type something" value={props.state.type} onChange={onChangeHandler} />
             <select id="font-size" name="fontSize" value={props.state.fontSize} onChange={onChangeHandler} >
                 <option value="10">10</option>
-                <option value="16">16</option>
-                <option value="20">20</option>
-                <option value="40">40</option>
+                <option value="16">20</option>
+                <option value="20">35</option>
+                <option value="40">60</option>
             </select>
             <div className="theme-container">
                 <label className="theme-choice-container">
-                    <input type="radio" name ="theme" id="light" data-value="light" defaultChecked onClick={onChangeHandler} />
+                    <input type="radio" name ="theme" id="light" value="light" defaultChecked onClick={onChangeHandler} />
                     <span className="custom-radio"></span>
                 </label>
                 <label className="theme-choice-container">
-                    <input type="radio" name ="theme" id="dark" data-value="dark" onClick={onChangeHandler}/>
+                    <input type="radio" name ="theme" id="dark" value="dark" onClick={onChangeHandler}/>
                     <span className="custom-radio"></span>
                 </label>
             </div>
@@ -50,7 +51,7 @@ export default function Navbar(props){
 
             </div>
             {/* To Do: Add in onClick Handler */}
-            <i className="material-icons" onClick={resetHandler} >refresh</i>
+            <i className="material-icons" onClick={resetHandler}>refresh</i>
         
 
             <style>
@@ -63,7 +64,7 @@ export default function Navbar(props){
                         max-width:100vw;
                         border-radius:48px;
                         height:2.5rem;
-                        border: 1px solid black;
+                        border: 1px solid var(--accent-color);
                         display:flex;
                         padding: .5rem;
                         justify-content: space-evenly;
@@ -87,10 +88,17 @@ export default function Navbar(props){
 
                     input, select {
                         border: none;
+                        background-color:var(--primary-color);
+                        color:var(--accent-color);
+                        padding: 5px;
                     }
 
                     input {
-                        border-right: 1px solid black;
+                        border-right: 1px solid var(--accent-color);
+                    }
+
+                    input::placeholder{
+                        color:var(--accent-color);
                     }
 
 
@@ -109,6 +117,9 @@ export default function Navbar(props){
                         max-width:30%;
                     }
                     
+                    i {
+                        cursor:pointer;
+                    }
 
                     i.hidden {
                       display:none;
@@ -119,13 +130,23 @@ export default function Navbar(props){
                         border-radius:50%;
                         height:14px;
                         width:14px;
-                        border: 1px solid black;
+                        border: 1px solid var(--accent-color);
                         
 
                     }
 
                     input:checked + .custom-radio{
-                        background-color:black;
+                        background-color:var(--accent-color);
+                    }
+
+                    @media only screen and (max-width: 650px){
+                        #type, #fontSize, select, .theme-container, .view-container{
+                            display:none;
+                        }
+
+                        #search{
+                            max-width:80%;
+                        }
                     }
                 `}
 
