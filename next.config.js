@@ -11,7 +11,7 @@ module.exports = (phase, { defaultConfig }) => {
 
   return {
     env:{
-        apiUrl:"http://localhost:3000/api/fonts"
+        apiUrl:"https://favfonts.now.sh/api/fonts"
     }
   }
 }
