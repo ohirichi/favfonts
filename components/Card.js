@@ -18,29 +18,31 @@ export default function Card(props){
     const [text, setText] = useState(sampleTexts[Math.floor(Math.random()*sampleTexts.length)]) 
     
     return(
-        <div className="card-container" ref={ref}>
-            {props.index <=20 || inView ? 
-                <div className="card">
-                    <div className="card-header">
-                        <div className="font-family">{props.font.family}</div>
-                        {/* <p className="author"></p> */}
-                        <button>+</button>
+        <div className="card-wrapper"  ref={ref}>
+            <div className="card-container"> 
+                {props.index <=20 || inView ? 
+                    <div className="card">
+                        <div className="card-header">
+                            <div className="font-family">{props.font.family}</div>
+                            {/* <p className="author"></p> */}
+                            <button>+</button>
+                        </div>
+                        
+                        <div className="font-preview">{props.type.length ? props.type : text }</div>
                     </div>
-                    
-                    <div className="font-preview">{props.type.length ? props.type : text }</div>
-                </div>
-                :
-                <div className="card">
-                    <div className="card-header">
-                        <div className="font-family">Loading...</div>
-                        {/* <p className="author"></p> */}
-                        <button>+</button>
-                    </div>
-                    
-                    <div className="font-preview"></div>
+                    :
+                    <div className="card">
+                        <div className="card-header">
+                            <div className="font-family">Loading...</div>
+                            {/* <p className="author"></p> */}
+                            <button>+</button>
+                        </div>
+                        
+                        <div className="font-preview"></div>
 
-                </div>
-            }
+                    </div>
+                }
+            </div>
             <style jsx>
                 {`
                     ${props.index <= 20 || inView ? `@Font-face{
@@ -49,9 +51,10 @@ export default function Card(props){
                     }` : ""}
                    
                     .card-container{
-                        flex:1;
                         min-width:300px;
+                        max-width:${props.view == "list" ? "100vw" : "23vw"};
                     }
+
                     .card{
                         min-width:200px;
                         min-height:200px;
@@ -66,6 +69,7 @@ export default function Card(props){
                         align-items: center;
                         margin:1rem;
                         flex-grow:1;
+                        
                     }
 
                     .card-header{
@@ -92,10 +96,25 @@ export default function Card(props){
                         margin-top:1rem;
                         align-self: center;
                         margin: auto;
+                        overflow-wrap:break-word;
+                        word-wrap:break-word;
                     }
 
-                    @media only screen and (max-width: 650px){
+                    @media only screen and (max-width: 1210px){
+                        .card-container{
+                            max-width:${props.view == "list" ? "100vw" : "31vw"};
+                        }
 
+                    }
+                    @media only screen and (max-width: 900px){
+                        .card-container{
+                            max-width:${props.view == "list" ? "100vw" : "48vw"};
+                        }
+                    }
+                    @media only screen and (max-width: 600px){
+                        .card-container{
+                            max-width:100vw;
+                        }
                     }
                 `}
 

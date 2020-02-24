@@ -29,9 +29,9 @@ export default function Navbar(props){
             <input id="type" name="type" type="text" placeholder="Type something" value={props.state.type} onChange={onChangeHandler} />
             <select id="font-size" name="fontSize" value={props.state.fontSize} onChange={onChangeHandler} >
                 <option value="10">10</option>
-                <option value="16">20</option>
-                <option value="20">35</option>
-                <option value="40">60</option>
+                <option value="20">20</option>
+                <option value="35">35</option>
+                <option value="60">60</option>
             </select>
             <div className="theme-container">
                 <label className="theme-choice-container">
@@ -59,7 +59,7 @@ export default function Navbar(props){
                     .nav-container{
                         max-width:100vw;
                         border-radius:48px;
-                        height:2.5rem;
+                        height:3rem;
                         border: 1px solid var(--accent-color);
                         display:flex;
                         padding: .5rem;
@@ -86,7 +86,7 @@ export default function Navbar(props){
                         border: none;
                         background-color:var(--primary-color);
                         color:var(--accent-color);
-                        padding: 5px;
+                        padding: 2px;
                     }
 
                     input {
