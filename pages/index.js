@@ -44,13 +44,16 @@ export default class Index extends Component{
     render(){
 
          const state = this.state;
+        
          let fontList;
          if(state.search.length){
             const regex = RegExp(`\w*${state.search}+\w*`,"i")
             fontList = this.props.fonts.filter((font) => regex.test(font.family))
+            
          }
          else{
              fontList = this.props.fonts;
+          
          }
          
 

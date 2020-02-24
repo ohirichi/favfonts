@@ -16,6 +16,8 @@ export default function Card(props){
         "The sky was cloudless and of a deep dark blue."
     ]
     const [text, setText] = useState(sampleTexts[Math.floor(Math.random()*sampleTexts.length)]) 
+
+    const url = "https://fonts.googleapis.com/css?family=" + props.font.family.replace(" ", "+");
     
     return(
         <div className="card-wrapper"  ref={ref}>
@@ -45,10 +47,7 @@ export default function Card(props){
             </div>
             <style jsx>
                 {`
-                    ${props.index <= 20 || inView ? `@Font-face{
-                        font-family:${props.font.family};
-                        src:url(${props.font.files.regular});
-                    }` : ""}
+                   @import url(${url});
                    
                     .card-container{
                         min-width:300px;
@@ -90,7 +89,7 @@ export default function Card(props){
 
                     .font-preview{
                         width:100%;
-                        font-family:${props.font.family};
+                        font-family:"${props.font.family}";
                         font-size:${props.fontSize + "px"};
                         color: var(--accent-color);
                         margin-top:1rem;
