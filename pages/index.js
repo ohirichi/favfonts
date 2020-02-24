@@ -57,17 +57,16 @@ export default class Index extends Component{
         return(
             <div className="container">
                 <Head>
-                    {/* Head tags including title etc for SEO */}
+                    <title>Favorite Fonts</title>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
                 </Head>
-                {/* To Do: Style Header and add in logo */}
                 <header id="header">
                     <div className="header-left">
                         <i className="material-icons menu" onClick={e=> this.updateState({showNav: true})} >menu</i>
                         {/* <img src="" className="logo" /> */}
                         <div className="logo">Favorite Fonts</div>
                     </div>
-                    <div className={ state.showNav ? "header-links active" : "header-links" }onClick={e=> {console.log("clicked"); this.updateState({showNav: false})}}>
+                    <div className={ state.showNav ? "header-links active" : "header-links" }onClick={e=> {this.updateState({showNav: false})}}>
                         <ul className="link-list">
                             <li><Link href="/"><a className="active">CATALOG</a></Link></li>
                             <li><a href="#" >FEATURED</a></li>
@@ -78,17 +77,10 @@ export default class Index extends Component{
                     </div>
                     
                 </header>
-                {/* To Do: Navbar component */}
+                
                 <Navbar state={this.state} onInputChange={this.updateState} />
                 <main id="main">
-                    {/* To Do: Card Component */}
-                              
                     {fontList.map((font, index) => (<Card font={font} index ={index} fontSize={state.fontSize} type={state.type} key={font.family} />))}
-                    {/* <div>
-                    {fontList.filter((font,index) => index >= 100).map((font) => (<Card font={font} fontSize={state.fontSize} type={state.type} key={font.family} />))}
-                    </div> */}
-                        
-                    
                     <Link href="/#header" as="/" ><a className={state.scrolled ? "top-btn" : "top-btn hidden"}><i className="material-icons">arrow_upward</i></a></Link>
                 </main>
                 
@@ -272,7 +264,7 @@ export default class Index extends Component{
 }
 
 Index.getInitialProps = async function(){
-    const res = await axios.get("http://localhost:3000/api/fonts")
+    const res = await axios.get(process.env.apiUrl)
     const fonts = res.data;
     
     return ({fonts})

@@ -25,7 +25,6 @@ export default function Navbar(props){
 
     return (
         <div className="nav-container">
-            {/* 1. search area  2. text to display 3. font size selection 4. theme selection 5. list/grid view toggle 6. reset button*/}
             <input id="search" name="search" type="text" placeholder="Search fonts" value={props.state.search} onChange={onChangeHandler} />
             <input id="type" name="type" type="text" placeholder="Type something" value={props.state.type} onChange={onChangeHandler} />
             <select id="font-size" name="fontSize" value={props.state.fontSize} onChange={onChangeHandler} >
@@ -45,12 +44,9 @@ export default function Navbar(props){
                 </label>
             </div>
             <div className="view-container">
-                {/* To Do: Add in onClick Handler */}
                 <i className={props.state.view == "list" ? "material-icons hidden" : "material-icons" } data-name="view" data-value="list" onClick={onChangeHandler}>list</i>
                 <i className={props.state.view == "grid" ? "material-icons hidden" : "material-icons" } data-name="view" data-value="grid" onClick={onChangeHandler}>view_module</i>
-
             </div>
-            {/* To Do: Add in onClick Handler */}
             <i className="material-icons" onClick={resetHandler}>refresh</i>
         
 
