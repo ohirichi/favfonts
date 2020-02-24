@@ -36,7 +36,7 @@ It addresses the following requirements from the Chingu Tier 3 Favorite Fonts Pr
 - [x] Your repo needs to have a robust README.md
 - [x] Make sure that there are no errors in the developer console before submitting
 
-##Extras (Not Required)
+## Extras (Not Required)
 
 - [x] Make your design fully responsive (small/large/portrait/landscape, etc.)
 - [x] Implement the light/dark mode toggle buttons
