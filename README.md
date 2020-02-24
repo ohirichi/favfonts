@@ -1,4 +1,4 @@
-# favfonts
+# Favorite Fonts
 
 Favorite Fonts is a Google Fonts clone built using the Google Fonts API for the Chingu Solo Project.
 
@@ -17,7 +17,7 @@ It addresses the following requirements from the Chingu Tier 3 Favorite Fonts Pr
 
 - [x] Sample text in each card should be displayed in the corresponding font
 - [x] Buttons/links should be evident (make sure the cursor changes, etc.)
-- [ ] Implement a way to handle overflow from sample text in font cards, as the font size is adjustable
+- [x] Implement a way to handle overflow from sample text in font cards, as the font size is adjustable
 
 ## Functionality
 
@@ -27,9 +27,9 @@ It addresses the following requirements from the Chingu Tier 3 Favorite Fonts Pr
 - [x] Implement the 'reset' icon on the far right of the major navigation; it should reset the page as if it were reloaded (do not actaully reload the page)
 - [x] On load, the page should display fonts sorted by current popularity, as returned by the Google Fonts Developer API (see below); this call should be server-side
 - [x] The search feature should be fully functional and display matching fonts (it's up to you if you want to do this via a 'submit' or through onchange)
- - [x] When the search input is cleared (via reset button or manually), the fonts should automaticaly display sorted by poplarity again
- - [x] Fonts from the Developer API should be retrieved on the back-end and sent to the client (see below)
- - [x] StyleSheet requests from the Google Fonts API can be compiled on either the front or the back
+- [x] When the search input is cleared (via reset button or manually), the fonts should automaticaly display sorted by poplarity again
+- [x] Fonts from the Developer API should be retrieved on the back-end and sent to the client (see below)
+- [x] StyleSheet requests from the Google Fonts API can be compiled on either the front or the back
 
 ## Other
 
