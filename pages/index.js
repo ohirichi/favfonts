@@ -1,12 +1,13 @@
-import {Component, Suspense} from "react";
+import {Component} from "react";
 import Link from "next/link";
 import Head from "next/head";
 import axios from "axios";
-import dynamic from "next/dynamic";
 import debounce from "lodash.debounce";
-
 import Navbar from "../components/Navbar";
-const  Card = dynamic(()=> import ("../components/Card"));
+import Card from "../components/Card";
+import Wrapper from "../components/Wrapper";
+
+
 
 export default class Index extends Component{
     constructor(props){
@@ -23,6 +24,7 @@ export default class Index extends Component{
 
         this.state = this.initialState;
         this.updateState = this.updateState.bind(this);
+        
     }
 
 
@@ -38,9 +40,12 @@ export default class Index extends Component{
             else{
                 this.updateState({scrolled:false})
             }
-        },300))
+        },300));
+
+        
     }
     
+
     render(){
 
          const state = this.state;
@@ -83,7 +88,7 @@ export default class Index extends Component{
                 
                 <Navbar state={this.state} onInputChange={this.updateState} />
                 <main id="main">
-                    {fontList.map((font, index) => (<Card font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type} key={font.family} />))}
+                    {fontList.map((font, index) => (<Wrapper key={font.family}><Card  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type}  /></Wrapper>))}
                     <Link href="/#header" as="/" ><a className={state.scrolled ? "top-btn" : "top-btn hidden"}><i className="material-icons">arrow_upward</i></a></Link>
                 </main>
                 
@@ -105,6 +110,7 @@ export default class Index extends Component{
                             
                             
                         }
+
 
                         .container{
                             display:flex;

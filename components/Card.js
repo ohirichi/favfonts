@@ -1,13 +1,9 @@
 import {useState, useRef} from "react";
-import {useInView} from "react-intersection-observer";
 
 
 export default function Card(props){
-    const [ref, inView, entry] = useInView({
-        /* Optional options */
-        triggerOnce: true,
+    
 
-      })
     const sampleTexts = [
         "All their equipment and instruments are alive.",
         "I watched the storm, so beautiful yet terrific.",
@@ -17,37 +13,30 @@ export default function Card(props){
     ]
     const [text, setText] = useState(sampleTexts[Math.floor(Math.random()*sampleTexts.length)]) 
 
-    const url = "https://fonts.googleapis.com/css?family=" + props.font.family.replace(" ", "+");
-    
     return(
-        <div className="card-wrapper"  ref={ref}>
+        
+        <div className="card-wrapper"  >
+
             <div className="card-container"> 
-                {props.index <=20 || inView ? 
+               
                     <div className="card">
                         <div className="card-header">
                             <div className="font-family">{props.font.family}</div>
-                            {/* <p className="author"></p> */}
+                           
                             <button>+</button>
                         </div>
                         
                         <div className="font-preview">{props.type.length ? props.type : text }</div>
                     </div>
-                    :
-                    <div className="card">
-                        <div className="card-header">
-                            <div className="font-family">Loading...</div>
-                            {/* <p className="author"></p> */}
-                            <button>+</button>
-                        </div>
-                        
-                        <div className="font-preview"></div>
-
-                    </div>
-                }
+                    
             </div>
             <style jsx>
                 {`
-                   @import url(${url});
+                   ${props.font.files.regular  ? `@font-face{
+                    font-family:${props.font.family};
+                    src: url(${props.font.files.regular.replace("http:", "https:")}) format("truetype");
+                    font-display:swap;
+                }` : ""}
                    
                     .card-container{
                         min-width:300px;
