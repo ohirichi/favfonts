@@ -88,7 +88,8 @@ export default class Index extends Component{
                 
                 <Navbar state={this.state} onInputChange={this.updateState} />
                 <main id="main">
-                    {fontList.map((font, index) => (<Wrapper key={font.family}><Card  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type}  /></Wrapper>))}
+                    {fontList.map((font, index) => (<Wrapper key={font.family} child={<Card  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type}  />}></Wrapper>))}
+                    {/* {fontList.map((font, index) => (<Card key={font.family + index}  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type}  />))} */}
                     <Link href="/#header" as="/" ><a className={state.scrolled ? "top-btn" : "top-btn hidden"}><i className="material-icons">arrow_upward</i></a></Link>
                 </main>
                 

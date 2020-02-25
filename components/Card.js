@@ -1,4 +1,5 @@
 import {useState, useRef} from "react";
+import Head from "next/head";
 
 
 export default function Card(props){
@@ -12,10 +13,13 @@ export default function Card(props){
         "The sky was cloudless and of a deep dark blue."
     ]
     const [text, setText] = useState(sampleTexts[Math.floor(Math.random()*sampleTexts.length)]) 
-
+    const url = "https://fonts.googleapis.com/css?family="+ props.font.family.replace(" ", "+") + "&display=swap"
     return(
         
         <div className="card-wrapper"  >
+            <Head>
+                <link href={url} rel="stylesheet" />
+            </Head>
 
             <div className="card-container"> 
                
@@ -32,12 +36,6 @@ export default function Card(props){
             </div>
             <style jsx>
                 {`
-                   ${props.font.files.regular  ? `@font-face{
-                    font-family:${props.font.family};
-                    src: url(${props.font.files.regular.replace("http:", "https:")}) format("truetype");
-                    font-display:swap;
-                }` : ""}
-                   
                     .card-container{
                         min-width:300px;
                         max-width:${props.view == "list" ? "100vw" : "23vw"};

@@ -11,11 +11,14 @@ export default function Wrapper(props){
 
     return(
         <div ref= {ref}>
-            {inView ? props.children : <div className="loading">Fetching Font...</div>}
+            {inView ? props.child : <div className="loading">Fetching Font...</div>}
             <style jsx>
                 {`
                     .loading{
                         height:200px;
+                        display:flex;
+                        justify-content:center;
+                        align-items: center;
                     }
                 `}
             </style>
