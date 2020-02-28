@@ -3,11 +3,27 @@ import Link from "next/link";
 import Head from "next/head";
 import axios from "axios";
 import debounce from "lodash.debounce";
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase';
+import {firebaseConfig} from "../secrets";
+
 import Navbar from "../components/Navbar";
 import Card from "../components/Card";
 import Wrapper from "../components/Wrapper";
 
+firebase.apps.length ? firebase.app(): firebase.initializeApp(firebaseConfig) 
 
+const uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: 'popup',
+    signInSuccessUrl: '/',
+    // We will display Google and Facebook as auth providers.
+    signInOptions: [
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+
+    ]
+  };
 
 export default class Index extends Component{
     constructor(props){
@@ -77,9 +93,7 @@ export default class Index extends Component{
                     <div className={ state.showNav ? "header-links active" : "header-links" }onClick={e=> {this.updateState({showNav: false})}}>
                         <ul className="link-list">
                             <li><Link href="/"><a className="active">CATALOG</a></Link></li>
-                            <li><a href="#" >FEATURED</a></li>
-                            <li><a href="#" >ARTICLES</a></li>
-                            <li><a href="#" >ABOUT</a></li>
+                            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
                             
                         </ul>
                     </div>
