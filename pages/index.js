@@ -4,26 +4,18 @@ import Head from "next/head";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase';
+// import * as firebaseui from 'firebaseui'
+import firebase from 'firebase/app';
 import {firebaseConfig} from "../secrets";
 
 import Navbar from "../components/Navbar";
 import Card from "../components/Card";
 import Wrapper from "../components/Wrapper";
+import Login from "../components/Login";
 
 firebase.apps.length ? firebase.app(): firebase.initializeApp(firebaseConfig) 
 
-const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: 'popup',
-    signInSuccessUrl: '/',
-    // We will display Google and Facebook as auth providers.
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
 
-    ]
-  };
 
 export default class Index extends Component{
     constructor(props){
@@ -35,10 +27,30 @@ export default class Index extends Component{
             theme:"light",
             view:"grid",
             showNav:false,
-            scrolled: false
+            scrolled: false,
+            isSignedIn: false,
+            showLogin: false,
         }
 
         this.state = this.initialState;
+
+        this. uiConfig = {
+            // Popup signin flow rather than redirect flow.
+            signInFlow: 'popup',
+            
+            // We will display Email and Google as sign in options.
+            signInOptions: [
+              firebase.auth.EmailAuthProvider.PROVIDER_ID,
+              firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        
+            ],
+            callbacks: {
+                // Avoid redirects after sign-in.
+                signInSuccessWithAuthResult: () => false
+            },
+            'credentialHelper': 'NONE'
+        };
+
         this.updateState = this.updateState.bind(this);
         
     }
@@ -49,6 +61,10 @@ export default class Index extends Component{
     }
     
     componentDidMount(){
+        this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+            (user) => this.setState({isSignedIn: !!user})
+        );
+
         window.addEventListener("scroll", debounce(()=>{
             if(window.pageYOffset > 100){
                 this.updateState({scrolled:true})
@@ -59,7 +75,16 @@ export default class Index extends Component{
         },300));
 
         
+
+        
     }
+
+    componentWillUnmount() {
+        this.unregisterAuthObserver();
+      }
+    
+    
+    
     
 
     render(){
@@ -77,12 +102,13 @@ export default class Index extends Component{
           
          }
          
-
+         console.log("user:",firebase.auth().currentUser, "isSignedIn:", state.isSignedIn)
         return(
             <div className="container">
                 <Head>
                     <title>Favorite Fonts</title>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                    <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet" />
                 </Head>
                 <header id="header">
                     <div className="header-left">
@@ -93,19 +119,23 @@ export default class Index extends Component{
                     <div className={ state.showNav ? "header-links active" : "header-links" }onClick={e=> {this.updateState({showNav: false})}}>
                         <ul className="link-list">
                             <li><Link href="/"><a className="active">CATALOG</a></Link></li>
-                            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
-                            
+                            {this.state.isSignedIn? <li onClick={() => firebase.auth().signOut()}><a>LOGOUT</a></li> : <li onClick={() => this.updateState({showLogin:!this.state.showLogin}) }><a>LOGIN</a></li>}
+                                                       
                         </ul>
                     </div>
                     
                 </header>
+                <div className={this.state.showLogin && !this.state.isSignedIn ? "login" : "login hidden"}>
+                    <div className="close-btn" onClick={() => this.updateState({showLogin:false}) }>x</div>
+                    <Login updateState={this.updateState} />
+                </div>
                 
                 <Navbar state={this.state} onInputChange={this.updateState} />
-                <main id="main">
+                {/* <main id="main">
                     {fontList.map((font, index) => (<Wrapper key={font.family} child={<Card  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type}  />}></Wrapper>))}
-                    {/* {fontList.map((font, index) => (<Card key={font.family + index}  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type}  />))} */}
+                    
                     <Link href="/#header" as="/" ><a className={state.scrolled ? "top-btn" : "top-btn hidden"}><i className="material-icons">arrow_upward</i></a></Link>
-                </main>
+                </main> */}
                 
                 <footer>
                     <p> Coded by ohirichi | 2020 | Chingu Solo Project </p>
@@ -122,6 +152,7 @@ export default class Index extends Component{
                             background-color: var(--primary-color);
                             color: var(--accent-color);
                             overflow-x:hidden;
+                            font-family:'Roboto', sans-serif;
                             
                             
                         }
@@ -170,6 +201,39 @@ export default class Index extends Component{
 
                         a.active {
                             color:red;
+                        }
+
+                        .login {
+                            width:100%;
+                            overflow:hidden;
+                            display:flex;
+                            flex-direction:column;
+                            align-content:center;
+                            justify-content:center;
+                            max-height:100vh;
+                            transition: max-height 0.5s ease;
+
+                        }
+
+                        .login.hidden{
+                            
+                            max-height:0;
+                        }
+
+                        .close-btn{
+                            color:gray;
+                            font-size: .8rem; 
+                            border-radius:50%;
+                            width:2rem;
+                            height:2rem;
+                            background-color: white;   
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            border: 1px solid gray;
+                            align-self:flex-end;
+                            margin-right:.5rem;
+
                         }
 
                         main {

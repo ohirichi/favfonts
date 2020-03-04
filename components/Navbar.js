@@ -50,7 +50,7 @@ export default function Navbar(props){
             <i className="material-icons" onClick={resetHandler}>refresh</i>
         
 
-            <style>
+            <style jsx>
                 {`
                     * {
                         box-sizing: border-box;
