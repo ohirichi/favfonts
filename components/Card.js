@@ -12,7 +12,10 @@ export default function Card(props){
         "The spectacle before us was indeed sublime.",
         "The sky was cloudless and of a deep dark blue."
     ]
-    const [text, setText] = useState(sampleTexts[Math.floor(Math.random()*sampleTexts.length)]) 
+    const [text, setText] = useState(sampleTexts[Math.floor(Math.random()*sampleTexts.length)])
+    const [favorite, setFavorite] = useState(false) ; //To do: change to props.favorite later
+    
+    //TO DO: PROVIDE  BELOW URL WHEN CLICKING THE ADD BUTTON:
     const url = "https://fonts.googleapis.com/css?family="+ props.font.family.replace(" ", "+") + "&display=swap"
     return(
         
@@ -26,8 +29,11 @@ export default function Card(props){
                     <div className="card">
                         <div className="card-header">
                             <div className="font-family">{props.font.family}</div>
-                           
-                            <button>+</button>
+                            <div className="action-container"> 
+                            <i className= {favorite ? "material-icons favorite added" :"material-icons favorite"} onClick={() => setFavorite(!favorite)} >favorite</i>
+                                <button>+</button>
+                            </div>
+                            
                         </div>
                         
                         <div className="font-preview">{props.type.length ? props.type : text }</div>
@@ -64,14 +70,34 @@ export default function Card(props){
                         justify-content:space-between;
                     }
 
+                    .action-container{
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                    }
+
+                    .favorite {
+                        color: gray;
+                        opacity: 0.3;
+                        transform: scale(1.2);
+                        cursor: pointer;
+                        margin: 3px;
+                    }
+
+                    .favorite.added {
+                        color:red;
+                        opacity: 1;
+                    }
+
                     button {
                         border-radius: 50%;
                         background-color:red;
-                        width:25px;
-                        height:25px;
+                        width:24px;
+                        height:24px;
                         color: var(--primary-color);
                         border: none;
                         font-size:20px;
+                        margin: 0 5px;
                     }
 
                     .font-preview{

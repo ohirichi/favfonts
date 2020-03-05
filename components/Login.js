@@ -51,7 +51,7 @@ export default function Login (props){
                     <button type="submit">{formType == "login" ? "Submit" : "Register"}</button>
                 </form>
             </div>
-            <style>
+            <style jsx>
                 {`
                     .card {
                         

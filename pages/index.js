@@ -34,23 +34,6 @@ export default class Index extends Component{
 
         this.state = this.initialState;
 
-        this. uiConfig = {
-            // Popup signin flow rather than redirect flow.
-            signInFlow: 'popup',
-            
-            // We will display Email and Google as sign in options.
-            signInOptions: [
-              firebase.auth.EmailAuthProvider.PROVIDER_ID,
-              firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        
-            ],
-            callbacks: {
-                // Avoid redirects after sign-in.
-                signInSuccessWithAuthResult: () => false
-            },
-            'credentialHelper': 'NONE'
-        };
-
         this.updateState = this.updateState.bind(this);
         
     }
@@ -136,6 +119,7 @@ export default class Index extends Component{
                     
                     <Link href="/#header" as="/" ><a className={state.scrolled ? "top-btn" : "top-btn hidden"}><i className="material-icons">arrow_upward</i></a></Link>
                 </main> */}
+                <Wrapper key={fontList[1].family} child={<Card  font={fontList[1]} fontSize={state.fontSize} view={state.view} type={state.type}  />}></Wrapper>
                 
                 <footer>
                     <p> Coded by ohirichi | 2020 | Chingu Solo Project </p>
@@ -197,6 +181,7 @@ export default class Index extends Component{
                             text-decoration: none;
                             margin:.5rem;
                             font-size:1rem;
+                            cursor:pointer;
                         }
 
                         a.active {
@@ -221,18 +206,19 @@ export default class Index extends Component{
                         }
 
                         .close-btn{
-                            color:gray;
-                            font-size: .8rem; 
+                            color:var(--primary-color);
+                            font-size: 1rem; 
                             border-radius:50%;
-                            width:2rem;
-                            height:2rem;
-                            background-color: white;   
+                            width:1.8rem;
+                            height:1.8rem;
+                            background-color: red;   
                             display:flex;
                             align-items:center;
                             justify-content:center;
-                            border: 1px solid gray;
+                            font-weight:bold;
                             align-self:flex-end;
                             margin-right:.5rem;
+                            cursor:pointer;
 
                         }
 
