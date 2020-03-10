@@ -1,5 +1,6 @@
 import {useState, useRef} from "react";
 import Head from "next/head";
+import axios from 'axios';
 
 
 export default function Card(props){
@@ -16,7 +17,16 @@ export default function Card(props){
     const [favorite, setFavorite] = useState(false) ; //To do: change to props.favorite later
     
     //TO DO: PROVIDE  BELOW URL WHEN CLICKING THE ADD BUTTON:
-    const url = "https://fonts.googleapis.com/css?family="+ props.font.family.replace(" ", "+") + "&display=swap"
+    const url = "https://fonts.googleapis.com/css?family="+ props.font.family.replace(" ", "+") + "&display=swap";
+
+
+    //TO-DO: Favorite state needs to be lifted up - onClick should make the post request then update the favorites object in the index page state.
+    const updateFavorites = function (){
+        axios.post(`${process.env.apiBaseUrl}favorites?uid=${this.state.userId}`, {fontFamily: [props.font.family], isFavorite: [!favorite]})
+        .then(dataObj => console.log(dataObj))
+        .then(()=> setFavorite(!favorite) )
+
+    }
     return(
         
         <div className="card-wrapper"  >
@@ -30,7 +40,7 @@ export default function Card(props){
                         <div className="card-header">
                             <div className="font-family">{props.font.family}</div>
                             <div className="action-container"> 
-                            <i className= {favorite ? "material-icons favorite added" :"material-icons favorite"} onClick={() => setFavorite(!favorite)} >favorite</i>
+                            <i className= {favorite ? "material-icons favorite added" :"material-icons favorite"} onClick={updateFavorites} >favorite</i>
                                 <button>+</button>
                             </div>
                             

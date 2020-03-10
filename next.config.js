@@ -5,7 +5,7 @@ module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
       env:{
-          apiUrl:"http://localhost:3000/api/fonts",
+          apiBaseUrl:"http://localhost:3000/api/",
           googleUrl,
           firebaseConfig
       }
@@ -14,7 +14,7 @@ module.exports = (phase, { defaultConfig }) => {
 
   return {
     env:{
-        apiUrl:"https://favfonts.now.sh/api/fonts",
+        apiBaseUrl:"https://favfonts.now.sh/api/",
         googleUrl,
         firebaseConfig
     }

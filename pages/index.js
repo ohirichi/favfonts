@@ -30,6 +30,9 @@ export default class Index extends Component{
             scrolled: false,
             isSignedIn: false,
             showLogin: false,
+            userId: null,
+            favorites: {},
+            favsOnly: false
         }
 
         this.state = this.initialState;
@@ -45,7 +48,9 @@ export default class Index extends Component{
     
     componentDidMount(){
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-            (user) => this.setState({isSignedIn: !!user})
+            (user) => {
+                //to-do possibly: get the favorite object in here as well.
+                user ? this.setState({isSignedIn: !!user, userId: user.uid}) : this.setState({isSignedIn: !!user}) }
         );
 
         window.addEventListener("scroll", debounce(()=>{
@@ -56,10 +61,20 @@ export default class Index extends Component{
                 this.updateState({scrolled:false})
             }
         },300));
-
+       
         
-
         
+    }
+
+    componentDidUpdate(){
+        if(this.state.userId && !Object.keys(this.state.favorites).length){
+            //api call to get the favorites data for the specific user
+            console.log("axios getting favorites?")
+           axios.get(`${process.env.apiBaseUrl}favorites?uid=${this.state.userId}`)
+           .then(favObj => {
+               this.updateState({favorites: favObj.data})
+            } )
+        }
     }
 
     componentWillUnmount() {
@@ -73,11 +88,11 @@ export default class Index extends Component{
     render(){
 
          const state = this.state;
-        
+         console.log("state:", state)
          let fontList;
          if(state.search.length){
             const regex = RegExp(`\w*${state.search}+\w*`,"i")
-            fontList = this.props.fonts.filter((font) => regex.test(font.family))
+            fontList = this.props.fonts.filter((font) => state.favsOnly ? state.favorites[font.family] && regex.test(font.family) : regex.test(font.family) )
             
          }
          else{
@@ -119,7 +134,7 @@ export default class Index extends Component{
                     
                     <Link href="/#header" as="/" ><a className={state.scrolled ? "top-btn" : "top-btn hidden"}><i className="material-icons">arrow_upward</i></a></Link>
                 </main> */}
-                <Wrapper key={fontList[1].family} child={<Card  font={fontList[1]} fontSize={state.fontSize} view={state.view} type={state.type}  />}></Wrapper>
+                <Wrapper key={fontList[1].family} child={<Card  font={fontList[1]} fontSize={state.fontSize} view={state.view} type={state.type} updateState={this.updateState} />}></Wrapper>
                 
                 <footer>
                     <p> Coded by ohirichi | 2020 | Chingu Solo Project </p>
@@ -338,7 +353,7 @@ export default class Index extends Component{
 }
 
 Index.getInitialProps = async function(){
-    const res = await axios.get(process.env.apiUrl)
+    const res = await axios.get(`${process.env.apiBaseUrl}fonts`)
     const fonts = res.data;
     
     return ({fonts})
