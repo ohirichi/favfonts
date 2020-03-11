@@ -14,6 +14,13 @@ export default function Navbar(props){
        props.onInputChange(updObj);
     }
 
+    function favsFilterHandler(){
+        let updObj ={
+            favsOnly:!props.state.favsOnly
+        }
+        props.onInputChange(updObj);
+    }
+
     function resetHandler(){
         let updObj = {
             search:"",
@@ -22,7 +29,6 @@ export default function Navbar(props){
         }
         props.onInputChange(updObj);
     }
-
     return (
         <div className="nav-container">
             <input id="search" name="search" type="text" placeholder="Search fonts" value={props.state.search} onChange={onChangeHandler} />
@@ -47,6 +53,7 @@ export default function Navbar(props){
                 <i className={props.state.view == "list" ? "material-icons hidden" : "material-icons" } data-name="view" data-value="list" onClick={onChangeHandler}>list</i>
                 <i className={props.state.view == "grid" ? "material-icons hidden" : "material-icons" } data-name="view" data-value="grid" onClick={onChangeHandler}>view_module</i>
             </div>
+            <i className={props.state.favsOnly ? "material-icons favorites selected" : "material-icons favorites"} onClick={favsFilterHandler}>favorite</i>
             <i className="material-icons" onClick={resetHandler}>refresh</i>
         
 
@@ -133,6 +140,17 @@ export default function Navbar(props){
 
                     input:checked + .custom-radio{
                         background-color:var(--accent-color);
+                    }
+
+                    .favorites {
+                        color: gray;
+                        opacity: 0.3;
+                        cursor: pointer;
+                    }
+
+                    .favorites.selected{
+                        color:black;
+                        opacity:1;
                     }
 
                     @media only screen and (max-width: 650px){

@@ -3,8 +3,6 @@ import Link from "next/link";
 import Head from "next/head";
 import axios from "axios";
 import debounce from "lodash.debounce";
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-// import * as firebaseui from 'firebaseui'
 import firebase from 'firebase/app';
 import {firebaseConfig} from "../secrets";
 
@@ -49,7 +47,7 @@ export default class Index extends Component{
     componentDidMount(){
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
             (user) => {
-                //to-do possibly: get the favorite object in here as well.
+               
                 user ? this.setState({isSignedIn: !!user, userId: user.uid}) : this.setState({isSignedIn: !!user}) }
         );
 
@@ -72,6 +70,7 @@ export default class Index extends Component{
             console.log("axios getting favorites?")
            axios.get(`${process.env.apiBaseUrl}favorites?uid=${this.state.userId}`)
            .then(favObj => {
+               console.log("favObj:", favObj)
                this.updateState({favorites: favObj.data})
             } )
         }
@@ -90,9 +89,14 @@ export default class Index extends Component{
          const state = this.state;
          console.log("state:", state)
          let fontList;
-         if(state.search.length){
-            const regex = RegExp(`\w*${state.search}+\w*`,"i")
-            fontList = this.props.fonts.filter((font) => state.favsOnly ? state.favorites[font.family] && regex.test(font.family) : regex.test(font.family) )
+         if(state.search.length || state.favsOnly){
+             if(state.search.length){
+                const regex = RegExp(`\w*${state.search}+\w*`,"i")
+                fontList = this.props.fonts.filter((font) => state.favsOnly ? state.favorites[font.family] && regex.test(font.family) : regex.test(font.family) ) 
+             }
+             else{
+                 fontList = this.props.fonts.filter(font => state.favorites[font.family])
+             }
             
          }
          else{
@@ -100,7 +104,7 @@ export default class Index extends Component{
           
          }
          
-         console.log("user:",firebase.auth().currentUser, "isSignedIn:", state.isSignedIn)
+
         return(
             <div className="container">
                 <Head>
@@ -129,12 +133,12 @@ export default class Index extends Component{
                 </div>
                 
                 <Navbar state={this.state} onInputChange={this.updateState} />
-                {/* <main id="main">
-                    {fontList.map((font, index) => (<Wrapper key={font.family} child={<Card  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type}  />}></Wrapper>))}
+                <main id="main">
+                    {fontList.map((font, index) => (<Wrapper key={font.family} child={<Card state={state} favorites={state.favorites} isFavorite={state.favorites[font.family]}  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type} updateState={this.updateState}  />}></Wrapper>))}
                     
                     <Link href="/#header" as="/" ><a className={state.scrolled ? "top-btn" : "top-btn hidden"}><i className="material-icons">arrow_upward</i></a></Link>
-                </main> */}
-                <Wrapper key={fontList[1].family} child={<Card  font={fontList[1]} fontSize={state.fontSize} view={state.view} type={state.type} updateState={this.updateState} />}></Wrapper>
+                </main>
+                {/* <Wrapper key={fontList[1].family} child={<Card  font={fontList[1]} state={state} favorites={state.favorites} isFavorite={state.favorites[fontList[1].family]} fontSize={state.fontSize} view={state.view} type={state.type} updateState={this.updateState} />}></Wrapper> */}
                 
                 <footer>
                     <p> Coded by ohirichi | 2020 | Chingu Solo Project </p>

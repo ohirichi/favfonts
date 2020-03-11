@@ -16,21 +16,24 @@ export default function (req, res) {
     .then(doc => {
       if (!doc.exists) {
         console.log('No such document!');
+        //if a favorite object doesn't already exist send back an object with at least one property so that front end will not call API again im an endless loop
         res.status(200).json({hasFavs: false})
       } else {
         console.log('Document data:', doc.data());
-        res.status(200).json(doc)
+        res.status(200).json(doc.data())
       }
     })
+    .catch(err => console.log("error in get request:", err))
   }
  
   //post request updating a favorite for a user:
 
   if(req.method === "POST"){
+    console.log("req.body.isFavorite:", req.body.isFavorite)
     let setUserFav = userFavoritesRef.set({
-      [req.body.fontFamily]:[req.body.isFavorite]
+      [req.body.fontFamily]:req.body.isFavorite
     }, {merge:true})
-    .then(ref => console.log("ref.data:", ref.data))
-    .then(res.status(200))
+    .then(ref => console.log("ref:", ref))
+    .then(res.status(200).end())
     }
   }    
