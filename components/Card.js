@@ -2,6 +2,8 @@ import {useState, useRef} from "react";
 import Head from "next/head";
 import axios from 'axios';
 
+import Modal from './Modal';
+
 
 export default function Card(props){
     
@@ -14,10 +16,12 @@ export default function Card(props){
         "The sky was cloudless and of a deep dark blue."
     ]
     const [text, setText] = useState(sampleTexts[Math.floor(Math.random()*sampleTexts.length)])
+    const [showModal, setShowModal] = useState(false);
     
     
     //TO DO: PROVIDE  BELOW URL WHEN CLICKING THE ADD BUTTON:
     const url = "https://fonts.googleapis.com/css?family="+ props.font.family.replace(" ", "+") + "&display=swap";
+    const stylesheetCode = `<link rel="stylesheet" href="${url}" />`;
 
 
     const updateFavorites = function (){
@@ -40,7 +44,7 @@ export default function Card(props){
                             <div className="font-family">{props.font.family}</div>
                             <div className="action-container"> 
                             <i className= {props.isFavorite ? "material-icons favorite added" :"material-icons favorite"} onClick={updateFavorites} >favorite</i>
-                                <button>+</button>
+                                <button onClick ={()=>setShowModal(true)} >+</button>
                             </div>
                             
                         </div>
@@ -48,6 +52,9 @@ export default function Card(props){
                         <div className="font-preview">{props.type.length ? props.type : text }</div>
                     </div>
                     
+            </div>
+            <div onClick = {()=> setShowModal(false)}>
+                {showModal ? <Modal><h5>Copy and Paste the below:</h5><div className="code-container" onClick={(e)=> e.stopPropagation()}>{stylesheetCode}</div></Modal> : null}
             </div>
             <style jsx>
                 {`
@@ -119,6 +126,24 @@ export default function Card(props){
                         margin: auto;
                         overflow-wrap:break-word;
                         word-wrap:break-word;
+                    }
+
+                    h5{
+                        pointer-events: none;
+                    }
+                    .code-container{
+                        border-radius: 3px;
+                        border: 1px solid gray;
+                        background-color: #C1BCBC;
+                        font-weight:bolder;
+                        padding: 1rem;
+                        margin: .5rem;
+                        margin-bottom: 2rem;
+                        max-width:80%;
+                        word-wrap: break-word;
+                        overflow-y: auto;
+                        cursor:text;
+                        pointer-events:auto;
                     }
 
                     @media only screen and (max-width: 1210px){

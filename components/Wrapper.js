@@ -6,7 +6,8 @@ export default function Wrapper(props){
 
     const [ref, inView, entry] = useInView({
         /* Optional options */
-        threshold: .05
+        threshold: .05,
+        triggerOnce:true
       })
 
     return(
