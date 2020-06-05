@@ -143,13 +143,13 @@ export default function Navbar(props){
                     }
 
                     .favorites {
-                        color: gray;
-                        opacity: 0.3;
+                        color: rgb(128,128,128);
+                        opacity: 0.5;
                         cursor: pointer;
                     }
 
                     .favorites.selected{
-                        color:black;
+                        color:var(--accent-color);
                         opacity:1;
                     }
 

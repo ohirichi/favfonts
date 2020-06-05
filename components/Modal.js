@@ -46,14 +46,14 @@ export default function Modal(props){
                         display:flex;
                         flex-direction:column;
                         align-items:center;
-                        justify-content:center;
+                        justify-content:flex-start;
                         color: var(--accent-color);
                         padding: .5rem;
-                        padding-bottom: 2rem;
+                        padding-bottom: 1.5rem;
                         grid-area:main;
                         background-color:var(--primary-color);
                         place-self:center;
-                        border-radius: 5px;
+                        border-radius:5px;
                         max-width: 80vw;
                         pointer-events:none;
 
@@ -63,14 +63,16 @@ export default function Modal(props){
                     .close{
                         border-radius:50%;
                         align-self: flex-end;
-                        margin: 0;
-                        margin-bottom: 2rem;
+                        margin: 0 .5em;
                         padding: 5px;
-                        background-color:var(--primary-color);
+                        
                         color:var(--accent-color);
                         cursor:pointer;
                         font-size: 1.5rem;
                         pointer-events:auto;
+                        position:relative;
+                        top: -10px;
+                        right: -10px;
                     }
 
                     .hidden {

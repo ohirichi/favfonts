@@ -17,7 +17,9 @@ export default function Wrapper(props){
                 {`
                     .loading{
                         height:200px;
+                        margin:1rem;
                         display:flex;
+                        border-top: 1px solid var(--accent-color);
                         justify-content:center;
                         align-items: center;
                     }

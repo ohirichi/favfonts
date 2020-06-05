@@ -54,7 +54,7 @@ export default function Card(props){
                     
             </div>
             <div onClick = {()=> setShowModal(false)}>
-                {showModal ? <Modal><h5>Copy and Paste the below:</h5><div className="code-container" onClick={(e)=> e.stopPropagation()}>{stylesheetCode}</div></Modal> : null}
+                {showModal ? <Modal><h4>Add the below code inside the <code> &nbsp;&lt;head&gt; </code> tags of your html.</h4><div className="code-container" onClick={(e)=> e.stopPropagation()}><p>{stylesheetCode}</p></div></Modal> : null}
             </div>
             <style jsx>
                 {`
@@ -93,8 +93,8 @@ export default function Card(props){
                     }
 
                     .favorite {
-                        color: gray;
-                        opacity: 0.3;
+                        color: rgb(128, 128, 128);
+                        opacity: 0.5;
                         transform: scale(1.2);
                         cursor: pointer;
                         margin: 3px;
@@ -128,22 +128,27 @@ export default function Card(props){
                         word-wrap:break-word;
                     }
 
-                    h5{
+                    h4{
                         pointer-events: none;
+                        margin-top:0;
+                        font-weight:lighter;
                     }
                     .code-container{
                         border-radius: 3px;
                         border: 1px solid gray;
-                        background-color: #C1BCBC;
-                        font-weight:bolder;
+                        background-color: rgba(128, 128, 128, 0.2);
                         padding: 1rem;
                         margin: .5rem;
                         margin-bottom: 2rem;
-                        max-width:80%;
-                        word-wrap: break-word;
-                        overflow-y: auto;
+                        max-width:90%;
                         cursor:text;
                         pointer-events:auto;
+                    }
+                    p{
+                        
+                        word-break:break-all;
+                        
+                        
                     }
 
                     @media only screen and (max-width: 1210px){
