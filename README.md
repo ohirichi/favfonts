@@ -1,6 +1,10 @@
 # Favorite Fonts
 
-Favorite Fonts is a Google Fonts clone built using the Google Fonts API for the Chingu Solo Project. Built using REACT and Next.Js.
+Favorite Fonts is a Google Fonts clone built using the Google Fonts API for the Chingu Solo Project. 
+Built using REACT and Next.Js.
+Utilizes react-intersection-observer for lazy loading.
+Styling via styled-jsx.
+
 The live demo for this project is available here at [favfonts](https://favfonts.now.sh/)
 
 It addresses the following requirements from the Chingu Tier 3 Favorite Fonts Project: 
