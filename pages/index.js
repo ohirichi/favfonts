@@ -14,7 +14,6 @@ import Login from "../components/Login";
 firebase.apps.length ? firebase.app(): firebase.initializeApp(firebaseConfig) 
 
 
-
 export default class Index extends Component{
     constructor(props){
         super(props);
@@ -134,7 +133,9 @@ export default class Index extends Component{
                 
                 <Navbar state={this.state} onInputChange={this.updateState} />
                 <main id="main">
-                    {fontList.map((font, index) => (<Wrapper key={font.family} child={<Card state={state} favorites={state.favorites} isFavorite={state.favorites[font.family]}  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type} updateState={this.updateState}  />}></Wrapper>))}
+                    {fontList.length ? 
+                    fontList.map((font, index) => (<Wrapper key={font.family} child={<Card state={state} favorites={state.favorites} isFavorite={state.favorites[font.family]}  font={font} index ={index} fontSize={state.fontSize} view={state.view} type={state.type} updateState={this.updateState}  />}></Wrapper>))
+                    : <div className="alert">Sorry no fonts to show here 😥 Try clearing some filters</div>}
                     
                     <Link href="/#header" as="/" ><a className={state.scrolled ? "top-btn" : "top-btn hidden"}><i className="material-icons">arrow_upward</i></a></Link>
                 </main>
@@ -243,10 +244,21 @@ export default class Index extends Component{
 
                         main {
                             margin-top:2rem;
+                            min-height: 50vh;
                             position:relative;
                             display:grid;
                             grid-template-columns: ${state.view == "list" ? "1fr" : "1fr 1fr 1fr 1fr"} ;
+                            grid-template-areas:
+                            ${state.view == "list" ? "'main'" : "'main main main main'"};
+                                     
 
+                        }
+                        .alert{
+                            grid-area: main;
+                            position-self:center;
+                            margin: 2em;
+                            padding:2em;
+                            text-align:center;
                         }
 
                         .top-btn{
