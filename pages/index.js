@@ -243,7 +243,7 @@ export default class Index extends Component{
 
                         main {
                             margin-top:2rem;
-                            min-height: 50vh;
+                            min-height: 60vh;
                             position:relative;
                             display:grid;
                             grid-template-columns: ${state.view == "list" ? "1fr" : "1fr 1fr 1fr 1fr"} ;
