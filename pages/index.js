@@ -69,7 +69,6 @@ export default class Index extends Component{
             console.log("axios getting favorites?")
            axios.get(`${process.env.apiBaseUrl}favorites?uid=${this.state.userId}`)
            .then(favObj => {
-            //    console.log("favObj:", favObj)
                this.updateState({favorites: favObj.data})
             } )
         }
@@ -88,7 +87,6 @@ export default class Index extends Component{
          const state = this.state;
          console.log("state:", state)
          let fontList;
-         console.log("font object", this.props.fonts[0])
          if(state.search.length || state.favsOnly){
              if(state.search.length){
                 const regex = RegExp(`\w*${state.search}+\w*`,"i")
@@ -288,13 +286,16 @@ export default class Index extends Component{
 
                         @media only screen  and (max-width:1210px){
                             main{
-                                grid-template-columns: ${state.view == "list" ? "1fr" : "1fr 1fr 1fr"} 
+                                grid-template-columns: ${state.view == "list" ? "1fr" : "1fr 1fr 1fr"};
+                                grid-template-areas:
+                                ${state.view == "list" ? "'main'" : "'main main main'"};
                             }
                         }
 
                         @media only screen  and (max-width:900px){
                             main{
-                                grid-template-columns: ${state.view == "list" ? "1fr" : "1fr 1fr"} 
+                                grid-template-columns: ${state.view == "list" ? "1fr" : "1fr 1fr"};
+                                grid-template-areas: ${state.view == "list" ? "'main'" : "'main main'"}; 
                             }
                         }
                      
@@ -355,7 +356,8 @@ export default class Index extends Component{
 
                         @media only screen and (max-width: 600px){
                             main{
-                                grid-template-columns: 1fr; 
+                                grid-template-columns: 1fr;
+                                grid-template-areas:"main";
                             }
                         }
  
