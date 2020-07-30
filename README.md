@@ -31,4 +31,4 @@ It addresses the requirements for the Chingu Tier 3 Project.
 
 ## Running Locally
 
-Feel free to fork and clone to your local. Here's a great guide on how to do that [Forking Workflow Guide] (https://gist.github.com/Chaser324/ce0505fbed06b947d962)
+Feel free to fork and clone to your local. Here's a great guide on how to do that [Forking Workflow Guide](https://gist.github.com/Chaser324/ce0505fbed06b947d962)
