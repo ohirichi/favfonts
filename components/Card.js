@@ -25,9 +25,14 @@ export default function Card(props){
 
 
     const updateFavorites = function (){
-        axios.post(`${process.env.apiBaseUrl}favorites?uid=${props.state.userId}`, {fontFamily: props.font.family, isFavorite: !props.isFavorite})
-        .then(()=> props.updateState({favorites:{...props.favorites, [props.font.family]:!props.isFavorite }}) )
-        .catch(err => console.log(err))
+        if(props.state.userId){
+            axios.post(`${process.env.apiBaseUrl}favorites?uid=${props.state.userId}`, {fontFamily: props.font.family, isFavorite: !props.isFavorite})
+            .then(()=> props.updateState({favorites:{...props.favorites, [props.font.family]:!props.isFavorite }}) )
+            .catch(err => console.log(err))
+        }
+        else{
+            props.updateState({favorites:{...props.favorites, [props.font.family]:!props.isFavorite }})
+        }
 
     }
     return(

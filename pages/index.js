@@ -69,7 +69,7 @@ export default class Index extends Component{
             console.log("axios getting favorites?")
            axios.get(`${process.env.apiBaseUrl}favorites?uid=${this.state.userId}`)
            .then(favObj => {
-               console.log("favObj:", favObj)
+            //    console.log("favObj:", favObj)
                this.updateState({favorites: favObj.data})
             } )
         }
@@ -88,6 +88,7 @@ export default class Index extends Component{
          const state = this.state;
          console.log("state:", state)
          let fontList;
+         console.log("font object", this.props.fonts[0])
          if(state.search.length || state.favsOnly){
              if(state.search.length){
                 const regex = RegExp(`\w*${state.search}+\w*`,"i")
